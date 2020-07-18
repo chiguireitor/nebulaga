@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/player.gd" type="Script" id=1]
+[ext_resource path="res://textures/burger_sheet.png" type="Texture" id=2]
+[ext_resource path="res://textures/std_light.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 28.3475
+
+[node name="player" type="KinematicBody2D"]
+position = Vector2( 300.027, 864.875 )
+collision_layer = 3
+script = ExtResource( 1 )
+fire_wait = 0.4
+random_fire_spread = 600.0
+frame_time = 0.2
+num_frames = 15
+speed = 30.0
+
+[node name="sprite" type="Sprite" parent="."]
+scale = Vector2( 1.305, 1.305 )
+texture = ExtResource( 2 )
+vframes = 4
+hframes = 4
+
+[node name="light" type="Light2D" parent="."]
+position = Vector2( 0, 22.0003 )
+enabled = false
+texture = ExtResource( 3 )
+texture_scale = 0.4
+color = Color( 0, 0.6, 1, 1 )
+energy = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.157501, 4.72467 )
+shape = SubResource( 1 )

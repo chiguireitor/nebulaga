@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/pow_rapid.wav-f724f57f683ff37668d54fc9cc327f1f.sample"
+
+[deps]
+
+source_file="res://sounds/pow_rapid.wav"
+dest_files=[ "res://.import/pow_rapid.wav-f724f57f683ff37668d54fc9cc327f1f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

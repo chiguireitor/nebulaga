@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/ship_item.gd" type="Script" id=1]
+
+[node name="ship" type="HBoxContainer"]
+margin_right = 600.0
+rect_min_size = Vector2( 600, 200 )
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="panel" type="Panel" parent="."]
+margin_right = 200.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+
+[node name="data" type="VBoxContainer" parent="."]
+margin_left = 204.0
+margin_right = 504.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+
+[node name="title" type="Label" parent="data"]
+margin_right = 300.0
+margin_bottom = 26.0
+
+[node name="description" type="RichTextLabel" parent="data"]
+margin_top = 30.0
+margin_right = 300.0
+margin_bottom = 200.0
+size_flags_vertical = 3
+
+[node name="v" type="VBoxContainer" parent="."]
+margin_left = 508.0
+margin_right = 600.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
+alignment = 1
+
+[node name="select" type="Button" parent="v"]
+margin_top = 66.0
+margin_right = 92.0
+margin_bottom = 98.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
+disabled = true
+text = "Start"
+
+[node name="send" type="Button" parent="v"]
+margin_top = 102.0
+margin_right = 92.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
+disabled = true
+text = "Send"

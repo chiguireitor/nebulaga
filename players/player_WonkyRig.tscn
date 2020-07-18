@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/player.gd" type="Script" id=1]
+[ext_resource path="res://textures/ship2.png" type="Texture" id=2]
+[ext_resource path="res://textures/std_light.png" type="Texture" id=3]
+
+[node name="player" type="KinematicBody2D"]
+position = Vector2( 300.027, 864.875 )
+collision_layer = 3
+script = ExtResource( 1 )
+fire_wait = 0.3
+random_fire_spread = 400.0
+num_frames = 3
+speed = 200.0
+
+[node name="sprite" type="Sprite" parent="."]
+scale = Vector2( 2.545, 2.545 )
+texture = ExtResource( 2 )
+hframes = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -23.0123, -10.2348, -14.578, -2.08923, -12.2156, -24.6104, -5.28607, -35.3196, 5.73825, -35.4772, 12.8253, -24.2953, 15.8176, -1.77429, 22.9748, -10.3923, 25.4946, -10.2348, 25.582, 0.115601, 15.5026, 5.78528, 15.5728, 17.7985, -14.9803, 17.7985, -15.3654, 6.57269, -25.1298, -0.356873, -25.0597, -9.9198 )
+
+[node name="light" type="Light2D" parent="."]
+position = Vector2( 0, 22.0003 )
+texture = ExtResource( 3 )
+texture_scale = 0.4
+color = Color( 0, 0.6, 1, 1 )
+energy = 1.5

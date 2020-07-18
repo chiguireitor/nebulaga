@@ -1,0 +1,92 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends HBoxContainer
+
+var _details
+
+func init(own_address, dets):
+	_details = dets
+	var direction = ''
+	var coin = 'NAS'
+	var decs = 18
+	var value = dets.value
+	if dets.to['hash'] == own_address:
+		direction = '+'
+		$details.add_color_override(\"font_color\", Color(0.5, 1, 0.5))
+	else:
+		var token = NebulasWalletSingleton.get_token_by_address(dets.to['hash'])
+		if token != null:
+			var call_data = JSON.parse(dets.data)
+			
+			if call_data.error == OK:
+				if token is NebulasContractNRC20:
+					coin = token.token_symbol
+					decs = token.token_decimals
+					value = 0
+					if call_data.result.Function == 'transfer':
+						direction = '-'
+						var call_args = JSON.parse(call_data.result.Args)
+						value = int(call_args.result[1])
+						$details.add_color_override(\"font_color\", Color(1, 0.5, 1.0))
+				elif token is NebulasContractNRC721:
+					var call_args = JSON.parse(call_data.result.Args)
+					if call_args.error == OK:
+						call_args = call_args.result
+						var nft = token.nft_by_id(call_args[2])
+						
+						if nft != null:
+							coin = nft.asset_title
+							decs = 0
+							value = 1
+							if call_data.result.Function == 'transferFrom':
+								if call_args[0] == own_address:
+									direction = '-'
+								elif call_args[1] == own_address:
+									direction = '+'
+								else:
+									direction = '?'
+								$details.add_color_override(\"font_color\", Color(1, 1.0, 0.35))
+						else:
+							coin = '?'
+					else:
+						coin = '?'
+			else:
+				direction = '?'
+		else:
+			direction = '-'
+			$details.add_color_override(\"font_color\", Color(1, 0.5, 0.5))
+			if dets.tokenName != null:
+				coin = dets.tokenName
+				decs = dets.decimal
+		
+	# If dets.data is not null it's a contract execution
+	
+	$details.text = direction + NebulasWalletSingleton.num_to_printable(value, decs) + ' ' + coin
+"
+
+[node name="tx" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="direction" type="TextureRect" parent="."]
+margin_bottom = 1024.0
+
+[node name="details" type="Label" parent="."]
+margin_left = 4.0
+margin_top = 499.0
+margin_right = 568.0
+margin_bottom = 525.0
+size_flags_horizontal = 3
+align = 1
+valign = 1
+
+[node name="show_more" type="Button" parent="."]
+margin_left = 572.0
+margin_right = 600.0
+margin_bottom = 1024.0
+text = ">"

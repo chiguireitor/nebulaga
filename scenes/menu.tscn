@@ -1,0 +1,200 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://textures/title_screen.png" type="Texture" id=1]
+[ext_resource path="res://scenes/playfield.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/start_menu.gd" type="Script" id=3]
+[ext_resource path="res://scenes/wallet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ship_item.tscn" type="PackedScene" id=5]
+[ext_resource path="res://music/Visager_-_28_-_Miniboss_Fight_Loop.ogg" type="AudioStream" id=6]
+
+[node name="main" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="gameview" type="ViewportContainer" parent="."]
+show_behind_parent = true
+margin_right = 600.0
+margin_bottom = 1024.0
+rect_min_size = Vector2( 0, 1024 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="viewport" type="Viewport" parent="gameview"]
+size = Vector2( 600, 1024 )
+own_world = true
+transparent_bg = true
+handle_input_locally = false
+hdr = false
+disable_3d = true
+usage = 0
+render_target_update_mode = 3
+audio_listener_enable_2d = true
+gui_disable_input = true
+
+[node name="playfield" parent="gameview/viewport" instance=ExtResource( 2 )]
+
+[node name="menu" type="VBoxContainer" parent="."]
+margin_right = 600.0
+margin_bottom = 1024.0
+custom_constants/separation = 20
+alignment = 1
+script = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="menu"]
+margin_right = 600.0
+margin_bottom = 26.0
+text = "v0.1.0 - alpha"
+
+[node name="logo" type="TextureRect" parent="menu"]
+margin_top = 46.0
+margin_right = 600.0
+margin_bottom = 558.0
+texture = ExtResource( 1 )
+stretch_mode = 6
+
+[node name="start" type="Button" parent="menu"]
+margin_left = 254.0
+margin_top = 578.0
+margin_right = 346.0
+margin_bottom = 610.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+text = "Start"
+flat = true
+
+[node name="change_ship" type="Button" parent="menu"]
+margin_left = 198.0
+margin_top = 630.0
+margin_right = 402.0
+margin_bottom = 662.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+text = "Manage Ships"
+flat = true
+
+[node name="wallet" type="Button" parent="menu"]
+margin_left = 246.0
+margin_top = 682.0
+margin_right = 354.0
+margin_bottom = 714.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+text = "Wallet"
+flat = true
+
+[node name="options" type="Button" parent="menu"]
+margin_left = 238.0
+margin_top = 734.0
+margin_right = 362.0
+margin_bottom = 766.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+text = "Options"
+flat = true
+
+[node name="exit" type="Button" parent="menu"]
+margin_left = 262.0
+margin_top = 786.0
+margin_right = 338.0
+margin_bottom = 818.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+custom_colors/font_color = Color( 1, 0.443137, 0.443137, 1 )
+custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
+text = "Exit"
+flat = true
+
+[node name="Label2" type="Label" parent="menu"]
+margin_top = 838.0
+margin_right = 600.0
+margin_bottom = 1024.0
+size_flags_vertical = 3
+text = "Dev. by John \"Chiguireitor\" Villar
+Music by Visager"
+align = 1
+valign = 2
+
+[node name="wallet" parent="." instance=ExtResource( 4 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 600.0
+margin_bottom = 1024.0
+
+[node name="ship_pick" type="MarginContainer" parent="."]
+visible = false
+margin_right = 600.0
+margin_bottom = 1024.0
+
+[node name="v" type="VBoxContainer" parent="ship_pick"]
+margin_right = 600.0
+margin_bottom = 1024.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="h" type="HBoxContainer" parent="ship_pick/v"]
+margin_top = 76.0
+margin_right = 600.0
+margin_bottom = 108.0
+
+[node name="Label" type="Label" parent="ship_pick/v/h"]
+margin_top = 3.0
+margin_right = 472.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+text = "Pick your ship"
+
+[node name="refresh" type="Button" parent="ship_pick/v/h"]
+margin_left = 476.0
+margin_right = 600.0
+margin_bottom = 32.0
+text = "Refresh"
+
+[node name="item_list" type="ScrollContainer" parent="ship_pick/v"]
+margin_top = 112.0
+margin_right = 600.0
+margin_bottom = 912.0
+rect_min_size = Vector2( 0, 800 )
+
+[node name="v" type="VBoxContainer" parent="ship_pick/v/item_list"]
+margin_right = 600.0
+margin_bottom = 800.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="wonkyrig" parent="ship_pick/v/item_list/v" instance=ExtResource( 5 )]
+margin_bottom = 200.0
+asset_name = "WonkyRig"
+
+[node name="fastrig" parent="ship_pick/v/item_list/v" instance=ExtResource( 5 )]
+margin_top = 204.0
+margin_bottom = 404.0
+asset_name = "FastRig"
+
+[node name="burger" parent="ship_pick/v/item_list/v" instance=ExtResource( 5 )]
+margin_top = 204.0
+margin_bottom = 404.0
+asset_name = "Burger"
+
+[node name="buttons" type="HBoxContainer" parent="ship_pick/v"]
+margin_top = 916.0
+margin_right = 600.0
+margin_bottom = 948.0
+alignment = 1
+
+[node name="back" type="Button" parent="ship_pick/v/buttons"]
+margin_left = 262.0
+margin_right = 338.0
+margin_bottom = 32.0
+text = "Back"
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+bus = "music"

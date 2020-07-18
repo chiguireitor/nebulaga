@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://textures/projectiles1.png" type="Texture" id=1]
+[ext_resource path="res://scripts/bullet.gd" type="Script" id=2]
+[ext_resource path="res://textures/std_light.png" type="Texture" id=3]
+[ext_resource path="res://sounds/alien_laser.wav" type="AudioStream" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1.79239, 7.63169 )
+
+[node name="laser" type="KinematicBody2D"]
+collision_mask = 18
+script = ExtResource( 2 )
+
+[node name="sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 4
+frame = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 3 )
+texture_scale = 0.56
+color = Color( 1, 0, 0, 1 )
+energy = 2.0
+
+[node name="spawn_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )

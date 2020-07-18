@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://textures/explosion1/frame1.png" type="Texture" id=1]
+[ext_resource path="res://textures/explosion1/frame0.png" type="Texture" id=2]
+[ext_resource path="res://textures/explosion1/frame2.png" type="Texture" id=3]
+[ext_resource path="res://textures/std_light.png" type="Texture" id=4]
+[ext_resource path="res://sounds/alien_explode.wav" type="AudioStream" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends AnimatedSprite
+
+var time = 0
+
+func _ready():
+	playing = true
+	$explosion_sound.play()
+	connect(\"animation_finished\", self, \"animation_finished\")
+
+func _process(delta):
+	time += delta
+	if time < 0.1:
+		$light.energy = time * 4 / 0.1
+	else:
+		$light.energy = (0.2 - time) * 4 / 0.1
+
+func animation_finished():
+	queue_free()
+"
+
+[node name="explosion1" type="AnimatedSprite"]
+scale = Vector2( 4, 4 )
+frames = SubResource( 1 )
+script = SubResource( 2 )
+
+[node name="light" type="Light2D" parent="."]
+texture = ExtResource( 4 )
+texture_scale = 0.3
+color = Color( 0.898039, 0.996078, 0.419608, 1 )
+energy = 4.0
+
+[node name="explosion_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )

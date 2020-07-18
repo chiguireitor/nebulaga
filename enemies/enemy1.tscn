@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/enemy.gd" type="Script" id=1]
+[ext_resource path="res://textures/enemy1.png" type="Texture" id=2]
+[ext_resource path="res://textures/enemy1_elite.png" type="Texture" id=3]
+
+[node name="enemy1" type="KinematicBody2D"]
+collision_layer = 16
+script = ExtResource( 1 )
+elite_variant = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 0.3992, -16.6466, 11.266, -16.9616, 16.6207, -11.1344, 17.0932, 8.23686, 23.2353, 19.8911, 23.0778, 38.475, 17.8806, 42.5697, 13.7859, 37.845, 5.75387, 13.9065, -4.79797, 14.2215, -14.0899, 39.1049, -18.4996, 42.5697, -23.0668, 38.475, -22.5944, 18.9462, -17.0822, 8.23686, -17.0822, -10.8194, -11.4126, -16.9616 )
+
+[node name="sprite" type="Sprite" parent="."]
+scale = Vector2( 2.82669, 2.82669 )
+texture = ExtResource( 2 )
+hframes = 4

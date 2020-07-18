@@ -1,0 +1,83 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "NebulasWallet",
+"class": "NebulasContractDeployer",
+"language": "GDScript",
+"path": "res://addons/nebulas/NebulasContractDeployer.gd"
+}, {
+"base": "HTTPRequest",
+"class": "NebulasContractNRC20",
+"language": "GDScript",
+"path": "res://addons/nebulas/NebulasContractNRC20.gd"
+}, {
+"base": "HTTPRequest",
+"class": "NebulasContractNRC721",
+"language": "GDScript",
+"path": "res://addons/nebulas/NebulasContractNRC721.gd"
+}, {
+"base": "Node",
+"class": "NebulasNFT",
+"language": "GDScript",
+"path": "res://addons/nebulas/NebulasNFT.gd"
+}, {
+"base": "Node",
+"class": "NebulasTransaction",
+"language": "GDScript",
+"path": "res://addons/nebulas/NebulasTransaction.gd"
+}, {
+"base": "HTTPRequest",
+"class": "NebulasWallet",
+"language": "GDScript",
+"path": "res://addons/nebulas/NebulasWallet.gd"
+} ]
+_global_script_class_icons={
+"NebulasContractDeployer": "",
+"NebulasContractNRC20": "",
+"NebulasContractNRC721": "",
+"NebulasNFT": "",
+"NebulasTransaction": "",
+"NebulasWallet": ""
+}
+
+[application]
+
+config/name="nebulaga"
+run/main_scene="res://scenes/menu.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+WaveInfo="*res://scripts/WaveInfo.gd"
+NebulasWalletSingleton="*res://addons/nebulas/NebulasWallet.gd"
+
+[display]
+
+window/size/width=600
+window/size/height=1024
+window/handheld/orientation="sensor_portrait"
+window/stretch/mode="2d"
+window/stretch/aspect="keep_width"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "nebulas" )
+
+[gui]
+
+theme/custom="res://theme/default.tres"
+theme/custom_font="res://fonts/press_start_2p.tres"
+
+[rendering]
+
+vram_compression/import_etc=true
+environment/default_clear_color=Color( 0, 0, 0, 1 )
+environment/default_environment="res://default_env.tres"

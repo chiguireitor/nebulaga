@@ -1,0 +1,1011 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scripts/wallet.gd" type="Script" id=1]
+[ext_resource path="res://addons/nebulas/NebulasContractNRC20.gd" type="Script" id=2]
+[ext_resource path="res://addons/nebulas/NebulasContractDeployer.gd" type="Script" id=3]
+[ext_resource path="res://addons/nebulas/NebulasTransaction.gd" type="Script" id=4]
+[ext_resource path="res://addons/nebulas/NebulasContractNRC721.gd" type="Script" id=5]
+[ext_resource path="res://addons/nebulas/NebulasNFT.gd" type="Script" id=6]
+[ext_resource path="res://players/player_FastRig.tscn" type="PackedScene" id=7]
+[ext_resource path="res://players/player_WonkyRig.tscn" type="PackedScene" id=8]
+[ext_resource path="res://players/wallet/wallet_FastRig.tscn" type="PackedScene" id=9]
+[ext_resource path="res://players/wallet/wallet_WonkyRig.tscn" type="PackedScene" id=10]
+[ext_resource path="res://players/wallet/wallet_Burger.tscn" type="PackedScene" id=11]
+[ext_resource path="res://players/player_Burger.tscn" type="PackedScene" id=12]
+
+[sub_resource type="QRCodeTexture" id=1]
+text = "nebulas:"
+error_correction = 1
+
+[node name="wallet" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="contents" type="VBoxContainer" parent="."]
+margin_right = 580.0
+margin_bottom = 1004.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="card" type="MarginContainer" parent="contents"]
+margin_right = 580.0
+margin_bottom = 321.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="Panel" type="Panel" parent="contents/card"]
+margin_right = 580.0
+margin_bottom = 321.0
+
+[node name="h" type="HBoxContainer" parent="contents/card/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="v" type="VBoxContainer" parent="contents/card/Panel/h"]
+margin_right = 278.0
+margin_bottom = 301.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="contents/card/Panel/h/v"]
+margin_right = 278.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 0, 24 )
+custom_colors/font_color = Color( 0.215686, 0.72549, 1, 1 )
+text = "Balance"
+
+[node name="balance" type="Label" parent="contents/card/Panel/h/v"]
+margin_top = 30.0
+margin_right = 278.0
+margin_bottom = 56.0
+text = "0 NAS"
+
+[node name="addr" type="HBoxContainer" parent="contents/card/Panel/h/v"]
+margin_top = 60.0
+margin_right = 278.0
+margin_bottom = 92.0
+
+[node name="label" type="Label" parent="contents/card/Panel/h/v/addr"]
+margin_top = 3.0
+margin_bottom = 29.0
+
+[node name="copy" type="Button" parent="contents/card/Panel/h/v/addr"]
+margin_left = 4.0
+margin_right = 80.0
+margin_bottom = 32.0
+text = "Copy"
+
+[node name="addrreq" type="TextureRect" parent="contents/card/Panel/h"]
+margin_left = 282.0
+margin_right = 560.0
+margin_bottom = 301.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="sep" type="HBoxContainer" parent="contents"]
+margin_top = 341.0
+margin_right = 580.0
+margin_bottom = 373.0
+
+[node name="Label" type="Label" parent="contents/sep"]
+margin_top = 3.0
+margin_right = 192.0
+margin_bottom = 29.0
+text = "Transactions"
+
+[node name="refresh" type="Button" parent="contents/sep"]
+margin_left = 196.0
+margin_right = 320.0
+margin_bottom = 32.0
+text = "Refresh"
+
+[node name="list" type="ScrollContainer" parent="contents"]
+margin_top = 393.0
+margin_right = 580.0
+margin_bottom = 929.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="items" type="VBoxContainer" parent="contents/list"]
+margin_right = 580.0
+margin_bottom = 536.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="list_loader" type="CenterContainer" parent="contents"]
+visible = false
+margin_top = 614.0
+margin_right = 580.0
+margin_bottom = 948.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="label" type="Label" parent="contents/list_loader"]
+margin_left = 290.0
+margin_top = 154.0
+margin_right = 290.0
+margin_bottom = 180.0
+
+[node name="buttons" type="HBoxContainer" parent="contents"]
+margin_top = 949.0
+margin_right = 580.0
+margin_bottom = 1004.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+custom_constants/separation = 30
+alignment = 1
+
+[node name="back" type="Button" parent="contents/buttons"]
+margin_left = 130.0
+margin_right = 206.0
+margin_bottom = 55.0
+text = "Back"
+
+[node name="backup" type="Button" parent="contents/buttons"]
+margin_left = 236.0
+margin_right = 344.0
+margin_bottom = 55.0
+text = "Backup"
+
+[node name="send" type="Button" parent="contents/buttons"]
+margin_left = 374.0
+margin_right = 450.0
+margin_bottom = 55.0
+text = "Send"
+
+[node name="show_tools" type="Button" parent="contents/buttons"]
+visible = false
+margin_left = 350.0
+margin_right = 442.0
+margin_bottom = 32.0
+text = "Tools"
+
+[node name="editor_tools" type="Panel" parent="contents"]
+visible = false
+margin_top = 525.0
+margin_right = 580.0
+margin_bottom = 1004.0
+size_flags_vertical = 3
+
+[node name="v" type="VBoxContainer" parent="contents/editor_tools"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="code_edit" type="TextEdit" parent="contents/editor_tools/v"]
+margin_right = 580.0
+margin_bottom = 443.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="h" type="HBoxContainer" parent="contents/editor_tools/v"]
+margin_top = 447.0
+margin_right = 580.0
+margin_bottom = 479.0
+alignment = 1
+
+[node name="deploy_btn" type="Button" parent="contents/editor_tools/v/h"]
+margin_left = 236.0
+margin_right = 344.0
+margin_bottom = 32.0
+text = "Deploy"
+
+[node name="pin_panel" type="PopupDialog" parent="."]
+margin_right = 580.0
+margin_bottom = 1004.0
+popup_exclusive = true
+
+[node name="v" type="VBoxContainer" parent="pin_panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 20
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pin_action_label" type="Label" parent="pin_panel/v"]
+margin_top = 151.0
+margin_right = 580.0
+margin_bottom = 177.0
+text = "Enter your pin"
+align = 1
+
+[node name="pin_digits" type="HBoxContainer" parent="pin_panel/v"]
+margin_top = 197.0
+margin_right = 580.0
+margin_bottom = 261.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="digit0" type="Panel" parent="pin_panel/v/pin_digits"]
+margin_left = 48.0
+margin_right = 112.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Label" type="Label" parent="pin_panel/v/pin_digits/digit0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+align = 1
+valign = 1
+
+[node name="digit1" type="Panel" parent="pin_panel/v/pin_digits"]
+margin_left = 132.0
+margin_right = 196.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Label" type="Label" parent="pin_panel/v/pin_digits/digit1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+align = 1
+valign = 1
+
+[node name="digit2" type="Panel" parent="pin_panel/v/pin_digits"]
+margin_left = 216.0
+margin_right = 280.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Label" type="Label" parent="pin_panel/v/pin_digits/digit2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+align = 1
+valign = 1
+
+[node name="digit3" type="Panel" parent="pin_panel/v/pin_digits"]
+margin_left = 300.0
+margin_right = 364.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Label" type="Label" parent="pin_panel/v/pin_digits/digit3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+align = 1
+valign = 1
+
+[node name="digit4" type="Panel" parent="pin_panel/v/pin_digits"]
+margin_left = 384.0
+margin_right = 448.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Label" type="Label" parent="pin_panel/v/pin_digits/digit4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+align = 1
+valign = 1
+
+[node name="digit5" type="Panel" parent="pin_panel/v/pin_digits"]
+margin_left = 468.0
+margin_right = 532.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Label" type="Label" parent="pin_panel/v/pin_digits/digit5"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+align = 1
+valign = 1
+
+[node name="row1" type="HBoxContainer" parent="pin_panel/v"]
+margin_top = 281.0
+margin_right = 580.0
+margin_bottom = 409.0
+custom_constants/separation = 40
+alignment = 1
+
+[node name="digit0" type="Button" parent="pin_panel/v/row1"]
+margin_left = 58.0
+margin_right = 186.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="digit1" type="Button" parent="pin_panel/v/row1"]
+margin_left = 226.0
+margin_right = 354.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="digit2" type="Button" parent="pin_panel/v/row1"]
+margin_left = 394.0
+margin_right = 522.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="row2" type="HBoxContainer" parent="pin_panel/v"]
+margin_top = 429.0
+margin_right = 580.0
+margin_bottom = 557.0
+custom_constants/separation = 40
+alignment = 1
+
+[node name="digit3" type="Button" parent="pin_panel/v/row2"]
+margin_left = 58.0
+margin_right = 186.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="digit4" type="Button" parent="pin_panel/v/row2"]
+margin_left = 226.0
+margin_right = 354.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="digit5" type="Button" parent="pin_panel/v/row2"]
+margin_left = 394.0
+margin_right = 522.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="row3" type="HBoxContainer" parent="pin_panel/v"]
+margin_top = 577.0
+margin_right = 580.0
+margin_bottom = 705.0
+custom_constants/separation = 40
+alignment = 1
+
+[node name="digit6" type="Button" parent="pin_panel/v/row3"]
+margin_left = 58.0
+margin_right = 186.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="digit7" type="Button" parent="pin_panel/v/row3"]
+margin_left = 226.0
+margin_right = 354.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="digit8" type="Button" parent="pin_panel/v/row3"]
+margin_left = 394.0
+margin_right = 522.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="row4" type="HBoxContainer" parent="pin_panel/v"]
+margin_top = 725.0
+margin_right = 580.0
+margin_bottom = 853.0
+custom_constants/separation = 40
+alignment = 1
+
+[node name="erase" type="Button" parent="pin_panel/v/row4"]
+margin_left = 58.0
+margin_right = 186.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+text = "Erase"
+
+[node name="digit9" type="Button" parent="pin_panel/v/row4"]
+margin_left = 226.0
+margin_right = 354.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="confirm" type="Button" parent="pin_panel/v/row4"]
+margin_left = 394.0
+margin_right = 522.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+text = "Confirm"
+
+[node name="error_panel" type="PopupDialog" parent="."]
+margin_right = 580.0
+margin_bottom = 1004.0
+
+[node name="v" type="VBoxContainer" parent="error_panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="error_panel/v"]
+margin_top = 469.0
+margin_right = 580.0
+margin_bottom = 469.0
+
+[node name="Label" type="Label" parent="error_panel/v"]
+margin_top = 473.0
+margin_right = 580.0
+margin_bottom = 499.0
+align = 1
+autowrap = true
+
+[node name="close" type="Button" parent="error_panel/v"]
+margin_top = 503.0
+margin_right = 580.0
+margin_bottom = 535.0
+text = "Close"
+
+[node name="send_panel" type="PopupDialog" parent="."]
+margin_right = 580.0
+margin_bottom = 1004.0
+
+[node name="v" type="VBoxContainer" parent="send_panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="send_panel/v"]
+margin_right = 540.0
+margin_bottom = 26.0
+text = "Send"
+
+[node name="destination" type="HBoxContainer" parent="send_panel/v"]
+margin_top = 36.0
+margin_right = 540.0
+margin_bottom = 72.0
+custom_constants/separation = 20
+
+[node name="Label" type="Label" parent="send_panel/v/destination"]
+margin_top = 5.0
+margin_right = 32.0
+margin_bottom = 31.0
+text = "To"
+
+[node name="address_edit" type="LineEdit" parent="send_panel/v/destination"]
+margin_left = 52.0
+margin_right = 428.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+
+[node name="paste_btn" type="Button" parent="send_panel/v/destination"]
+margin_left = 448.0
+margin_right = 540.0
+margin_bottom = 36.0
+text = "Paste"
+
+[node name="amount" type="HBoxContainer" parent="send_panel/v"]
+margin_top = 82.0
+margin_right = 540.0
+margin_bottom = 118.0
+custom_constants/separation = 20
+
+[node name="Label" type="Label" parent="send_panel/v/amount"]
+margin_top = 5.0
+margin_right = 96.0
+margin_bottom = 31.0
+text = "Amount"
+
+[node name="amount_edit" type="LineEdit" parent="send_panel/v/amount"]
+margin_left = 116.0
+margin_right = 443.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+
+[node name="token_options" type="OptionButton" parent="send_panel/v/amount"]
+margin_left = 463.0
+margin_right = 540.0
+margin_bottom = 36.0
+text = "NAS"
+items = [ "NAS", null, false, 0, null ]
+selected = 0
+
+[node name="token_name" type="Label" parent="send_panel/v"]
+visible = false
+margin_top = 128.0
+margin_right = 540.0
+margin_bottom = 154.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fee" type="HBoxContainer" parent="send_panel/v"]
+margin_top = 128.0
+margin_right = 540.0
+margin_bottom = 154.0
+custom_constants/separation = 20
+
+[node name="Label" type="Label" parent="send_panel/v/fee"]
+margin_right = 112.0
+margin_bottom = 26.0
+text = "Gas fee"
+
+[node name="fee_slider" type="HSlider" parent="send_panel/v/fee"]
+margin_left = 132.0
+margin_right = 390.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 3.0
+tick_count = 4
+
+[node name="fee_type" type="Label" parent="send_panel/v/fee"]
+margin_left = 410.0
+margin_right = 540.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+text = "Slow"
+align = 2
+
+[node name="fee_label" type="Label" parent="send_panel/v"]
+margin_top = 164.0
+margin_right = 540.0
+margin_bottom = 190.0
+text = "0.0004NAS (~$0.000167)"
+align = 1
+
+[node name="buttons" type="HBoxContainer" parent="send_panel/v"]
+margin_top = 200.0
+margin_right = 540.0
+margin_bottom = 232.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="cancel_btn" type="Button" parent="send_panel/v/buttons"]
+margin_left = 168.0
+margin_right = 276.0
+margin_bottom = 32.0
+text = "Cancel"
+
+[node name="send_btn" type="Button" parent="send_panel/v/buttons"]
+margin_left = 296.0
+margin_right = 372.0
+margin_bottom = 32.0
+text = "Send"
+
+[node name="backup_panel" type="PopupDialog" parent="."]
+margin_right = 580.0
+margin_bottom = 1004.0
+
+[node name="v" type="VBoxContainer" parent="backup_panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="backup_panel/v"]
+margin_right = 540.0
+margin_bottom = 55.0
+text = "Import your private key
+(64 bits hex)"
+
+[node name="hexedit" type="TextEdit" parent="backup_panel/v"]
+margin_top = 75.0
+margin_right = 540.0
+margin_bottom = 275.0
+rect_min_size = Vector2( 0, 200 )
+readonly = true
+wrap_enabled = true
+
+[node name="showpk" type="CheckButton" parent="backup_panel/v"]
+margin_top = 295.0
+margin_right = 540.0
+margin_bottom = 335.0
+text = "Show your private key"
+
+[node name="Label2" type="Label" parent="backup_panel/v"]
+margin_top = 355.0
+margin_right = 540.0
+margin_bottom = 497.0
+text = "Remember to clear your clipboard after using your key in another app. Losing your private key to a third party could mean loss of funds."
+autowrap = true
+
+[node name="h" type="HBoxContainer" parent="backup_panel/v"]
+margin_top = 517.0
+margin_right = 540.0
+margin_bottom = 549.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="close_pk" type="Button" parent="backup_panel/v/h"]
+margin_left = 72.0
+margin_right = 164.0
+margin_bottom = 32.0
+text = "Close"
+
+[node name="clipboard_pk" type="Button" parent="backup_panel/v/h"]
+margin_left = 184.0
+margin_right = 468.0
+margin_bottom = 32.0
+text = "Copy to clipboard"
+
+[node name="NebulasContractDeployer" type="HTTPRequest" parent="."]
+use_threads = true
+script = ExtResource( 3 )
+address = "n1XT8N2aJwNjSaZEmexQhXpjcg6fY6BycQJ"
+network = 1
+
+[node name="MAGTNRC20" type="HTTPRequest" parent="NebulasContractDeployer"]
+use_threads = true
+script = ExtResource( 2 )
+address = "n1ifrebXTrWBssrJrpWHjWa6fdsiowG4h8G"
+token_name = "My Awesome Game Token"
+token_symbol = "MAGT"
+token_total_supply = "10000"
+
+[node name="BUCKSNRC20" type="HTTPRequest" parent="NebulasContractDeployer"]
+use_threads = true
+script = ExtResource( 2 )
+address = "n1xpGKXQs2aHwPRdUCbaGAFZ3WeAfpVPgS7"
+token_name = "Space Bucks"
+token_symbol = "BUCKS"
+token_decimals = 2
+token_total_supply = "1000000"
+
+[node name="NebulasTransaction" type="Node" parent="NebulasContractDeployer"]
+script = ExtResource( 4 )
+from = "n1XT8N2aJwNjSaZEmexQhXpjcg6fY6BycQJ"
+to = "n1XT8N2aJwNjSaZEmexQhXpjcg6fY6BycQJ"
+nonce = "4"
+gas_price = "20000000000"
+gas_limit = 50000000000
+contract = {
+"Args": "[\"Legendary Ships 4\"]",
+"Source": "
+'use strict';
+
+var Operator = function (obj) {
+	this.operator = {};
+	this.parse(obj);
+};
+
+Operator.prototype = {
+	toString: function () {
+		return JSON.stringify(this.operator);
+	},
+
+	parse: function (obj) {
+		if (typeof obj != \"undefined\") {
+			var data = JSON.parse(obj);
+			for (var key in data) {
+				this.operator[key] = data[key];
+			}
+		}
+	},
+
+	get: function (key) {
+		return this.operator[key];
+	},
+
+	set: function (key, value) {
+		this.operator[key] = value;
+	}
+};
+
+var StandardToken = function () {
+	LocalContractStorage.defineProperties(this, {
+		_name: null,
+		_deployer: null
+	});
+
+	LocalContractStorage.defineMapProperties(this, {
+		\"tokenOwner\": null,
+		\"ownedTokensCount\": {
+			parse: function (value) {
+				return new BigNumber(value);
+			},
+			stringify: function (o) {
+				return o.toString(10);
+			}
+		},
+		\"tokenApprovals\": null,
+		\"operatorApprovals\": {
+			parse: function (value) {
+				return new Operator(value);
+			},
+			stringify: function (o) {
+				return o.toString();
+			}
+		},
+		
+	});
+};
+
+StandardToken.prototype = {
+	init: function (name) {
+		this._name = name;
+		this._deployer = Blockchain.transaction.from;
+	},
+
+	name: function () {
+		return this._name;
+	},
+
+	// Returns the number of tokens owned by owner.
+	balanceOf: function (owner) {
+		var balance = this.ownedTokensCount.get(owner);
+		if (balance instanceof BigNumber) {
+			return balance.toString(10);
+		} else {
+			return \"0\";
+		}
+	},
+
+	//Returns the address of the owner of the tokenID.
+	ownerOf: function (tokenID) {
+		return this.tokenOwner.get(tokenID);
+	},
+
+	/**
+	 * Set or reaffirm the approved address for an token.
+	 * The function SHOULD throws unless transcation from is the current token owner, or an authorized operator of the current owner.
+	 */
+	approve: function (to, tokenId) {
+		var from = Blockchain.transaction.from;
+
+		var owner = this.ownerOf(tokenId);
+		if (to == owner) {
+			throw new Error(\"invalid address in approve.\");
+		}
+		if (owner == from || this.isApprovedForAll(owner, from)) {
+			this.tokenApprovals.set(tokenId, to);
+			this._approveEvent(true, owner, to, tokenId);
+		} else {
+			throw new Error(\"permission denied in approve.\");
+		}
+	},
+
+	// Returns the approved address for a single token.
+	getApproved: function (tokenId) {
+		return this.tokenApprovals.get(tokenId);
+	},
+
+	/**
+	 * Enable or disable approval for a third party (operator) to manage all of transaction from's assets.
+	 * operator Address to add to the set of authorized operators. 
+	 * @param approved True if the operators is approved, false to revoke approval
+	 */
+	setApprovalForAll: function(to, approved) {
+		var from = Blockchain.transaction.from;
+		if (from == to) {
+			throw new Error(\"invalid address in setApprovalForAll.\");
+		}
+		var operator = this.operatorApprovals.get(from) || new Operator();
+		operator.set(to, approved);
+		this.operatorApprovals.set(from, operator);
+	},
+
+	/**
+	 * @dev Tells whether an operator is approved by a given owner
+	 * @param owner owner address which you want to query the approval of
+	 * @param operator operator address which you want to query the approval of
+	 * @return bool whether the given operator is approved by the given owner
+	 */
+	isApprovedForAll: function(owner, operator) {
+		var operator = this.operatorApprovals.get(owner);
+		if (operator != null) {
+			if (operator.get(operator) === \"true\") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	},
+
+
+	/**
+	 * @dev Returns whether the given spender can transfer a given token ID
+	 * @param spender address of the spender to query
+	 * @param tokenId uint256 ID of the token to be transferred
+	 * @return bool whether the msg.sender is approved for the given token ID,
+	 *  is an operator of the owner, or is the owner of the token
+	 */
+	_isApprovedOrOwner: function(spender, tokenId) {
+		var owner = this.ownerOf(tokenId);
+		return spender == owner || this.getApproved(tokenId) == spender || this.isApprovedForAll(owner, spender);
+	},
+
+	/**
+	 * Transfers the ownership of an token from one address to another address. 
+	 * The caller is responsible to confirm that to is capable of receiving token or else they may be permanently lost.
+	 * Transfers tokenId from address from to address to, and MUST fire the Transfer event.
+	 * The function SHOULD throws unless the transaction from is the current owner, an authorized operator, or the approved address for this token. 
+	 * Throws if from is not the current owner. 
+	 * Throws if to is the contract address. 
+	 * Throws if tokenId is not a valid token.
+	 */
+	transferFrom: function (from, to, tokenId) {
+		var sender = Blockchain.transaction.from;
+		var contractAddress = Blockchain.transaction.to;
+		if (contractAddress == to) {
+			throw new Error(\"Forbidden to transfer money to a smart contract address\");
+		}
+		if (this._isApprovedOrOwner(sender, tokenId)) {
+			this._clearApproval(from, tokenId);
+			this._removeTokenFrom(from, tokenId);
+			this._addTokenTo(to, tokenId);
+			this._transferEvent(true, from, to, tokenId);
+		} else {
+			throw new Error(\"permission denied in transferFrom.\");
+		}
+		
+	},
+
+
+	 /**
+	 * Internal function to clear current approval of a given token ID
+	 * Throws if the given address is not indeed the owner of the token
+	 * @param sender owner of the token
+	 * @param tokenId uint256 ID of the token to be transferred
+	 */
+	_clearApproval: function (sender, tokenId) {
+		var owner = this.ownerOf(tokenId);
+		if (sender != owner) {
+			throw new Error(\"permission denied in clearApproval.\");
+		}
+		this.tokenApprovals.del(tokenId);
+	},
+
+	/**
+	 * Internal function to remove a token ID from the list of a given address
+	 * @param from address representing the previous owner of the given token ID
+	 * @param tokenId uint256 ID of the token to be removed from the tokens list of the given address
+	 */
+	_removeTokenFrom: function(from, tokenId) {
+		if (from != this.ownerOf(tokenId)) {
+			throw new Error(\"permission denied in removeTokenFrom.\");
+		}
+		var tokenCount = this.ownedTokensCount.get(from);
+		if (tokenCount.lt(1)) {
+			throw new Error(\"Insufficient account balance in removeTokenFrom.\");
+		}
+		this.ownedTokensCount.set(from, tokenCount.sub(1));
+	},
+
+	/**
+	 * Internal function to add a token ID to the list of a given address
+	 * @param to address representing the new owner of the given token ID
+	 * @param tokenId uint256 ID of the token to be added to the tokens list of the given address
+	 */
+	_addTokenTo: function(to, tokenId) {
+		this.tokenOwner.set(tokenId, to);
+		var tokenCount = this.ownedTokensCount.get(to) || new BigNumber(0);
+		this.ownedTokensCount.set(to, tokenCount.add(1));
+	},
+
+	/**
+	 * Internal function to mint a new token
+	 * @param to The address that will own the minted token
+	 * @param tokenId uint256 ID of the token to be minted by the msg.sender
+	 */
+	_mint: function(to, tokenId) {
+		this._addTokenTo(to, tokenId);
+		this._transferEvent(true, \"\", to, tokenId);
+	},
+	
+	createToken: function(tokenId) {
+		var from = Blockchain.transaction.from;
+		if (from === this._deployer) {
+			this._mint(from, tokenId);
+		} else {
+			throw new Error(\"Must be transaction deployer to use the createToken function.\");
+		}
+	},
+
+	/**
+	 * Internal function to burn a specific token
+	 * @param tokenId uint256 ID of the token being burned by the msg.sender
+	 */
+	_burn: function(owner, tokenId) {
+		this._clearApproval(owner, tokenId);
+		this._removeTokenFrom(owner, tokenId);
+		this._transferEvent(true, owner, \"\", tokenId);
+	},
+
+	_transferEvent: function (status, from, to, tokenId) {
+		Event.Trigger(this.name(), {
+			Status: status,
+			Transfer: {
+				from: from,
+				to: to,
+				tokenId: tokenId
+			}
+		});
+	},
+
+	_approveEvent: function (status, owner, spender, tokenId) {
+		Event.Trigger(this.name(), {
+			Status: status,
+			Approve: {
+				owner: owner,
+				spender: spender,
+				tokenId: tokenId
+			}
+		});
+	}
+
+};
+
+module.exports = StandardToken;
+",
+"SourceType": "js"
+}
+binary = null
+
+[node name="LegendaryShips4" type="HTTPRequest" parent="NebulasContractDeployer"]
+use_threads = true
+script = ExtResource( 5 )
+address = "n1v49p3qbqnn5amCkgiewx1Q52KmUuRpuhR"
+token_name = "Legendary Ships 4"
+
+[node name="WonkyRig" type="Node" parent="NebulasContractDeployer/LegendaryShips4"]
+script = ExtResource( 6 )
+token_id = "0x4021f4b25292e69b"
+asset_title = "John's Wonky Rig"
+asset_description = "An awfully slow rig that happens to shoot a barrage of lasers trouncing any alien formation in its path. Unfortunately, the laser guns are wonky and move a lot, shooting in random directions each time."
+ingame_asset = ExtResource( 8 )
+wallet_asset = ExtResource( 10 )
+transfer_to_address = "n1L2zm6hFjTLaYZhUVror1r8mBjRrbxkJbB"
+
+[node name="FastRig" type="Node" parent="NebulasContractDeployer/LegendaryShips4"]
+script = ExtResource( 6 )
+token_id = "0xe43c5e4c71922612"
+asset_title = "Fast Boi"
+asset_description = "The fastest ship in the universe, does the kessel run in 10 parsecs (is that even possible? wait, isn't parsecs a measure of distance, not time?). What it has in speed, it lacks in firing speed tho."
+ingame_asset = ExtResource( 7 )
+wallet_asset = ExtResource( 9 )
+transfer_to_address = "n1L2zm6hFjTLaYZhUVror1r8mBjRrbxkJbB"
+
+[node name="Burger" type="Node" parent="NebulasContractDeployer/LegendaryShips4"]
+script = ExtResource( 6 )
+token_id = "0x2837511157c7910b"
+asset_title = "Burger"
+asset_description = "Just a mutated flying burger with lots of dressing. Ranch dressing is higly dangerous for aliens, as it makes their cholesterol and triglycerides level spike. Humans too, but we don't care."
+ingame_asset = ExtResource( 12 )
+wallet_asset = ExtResource( 11 )
+transfer_to_address = "n1L2zm6hFjTLaYZhUVror1r8mBjRrbxkJbB"
